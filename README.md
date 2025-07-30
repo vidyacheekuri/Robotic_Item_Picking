@@ -1,1 +1,1 @@
-## End to End Smart Robotic Item Picking
+## End to End Smart Robotic Item Picking - 6D Pose Estimation Project
