@@ -1,0 +1,47 @@
+# -------------------------------------------------
+# Core Deep Learning & Computer Vision Libraries
+# -------------------------------------------------
+
+# PyTorch: The main deep learning framework for building and training your model.
+torch
+torchvision
+
+# OpenCV: EsPsential for real-time computer vision tasks, loading images, and basic image manipulations.
+# We use the headless version for servers as it doesn't include GUI packages.
+opencv-python-headless
+
+# -------------------------------------------------
+# 3D Data Handling & Numerical Operations
+# -------------------------------------------------
+
+# NumPy: A fundamental package for scientific computing and matrix operations.
+numpy
+
+# Open3D: A modern library for 3D data processing, including point clouds, meshes, and transformations.
+# Crucial for handling 3D models and visualizing poses.
+open3d
+
+# -------------------------------------------------
+# API Deployment Libraries
+# -------------------------------------------------
+
+# FastAPI: A modern, high-performance web framework for building your prediction API.
+fastapi
+
+# Uvicorn: The ASGI server that will run your FastAPI application.
+uvicorn
+
+# Required by FastAPI to handle file uploads (e.g., when you send an image to your API endpoint).
+python-multipart
+
+# -------------------------------------------------
+# Utilities
+# -------------------------------------------------
+
+# Pillow: Python Imaging Library, often a dependency for torchvision and other image tasks.
+Pillow
+
+# For managing environment variables (e.g., paths to your saved model weights).
+python-dotenv
+
+-e .
