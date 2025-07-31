@@ -44,4 +44,6 @@ Pillow
 # For managing environment variables (e.g., paths to your saved model weights).
 python-dotenv
 
+scipy
+
 -e .
