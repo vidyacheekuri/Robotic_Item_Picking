@@ -42,13 +42,17 @@ class YCBVideoDataset(Dataset):
         
         # The pose is a 3x4 matrix [R | t]
         # R is the 3x3 rotation matrix, t is the 3x1 translation vector
-        rotation = pose_matrix[:3, :3]
+        rotation_matrix = pose_matrix[:3, :3]
         translation = pose_matrix[:3, 3]
+        
+        # Convert the 3x3 ground truth rotation matrix to the 6D representation
+        # This is done by taking the first two columns of the matrix
+        rotation_6d = rotation_matrix[:, :2].T.flatten()
         
         # Create the sample dictionary
         sample = {
             'image': image, 
-            'rotation': torch.from_numpy(rotation).float(), 
+            'rotation': torch.from_numpy(rotation_6d).float(), 
             'translation': torch.from_numpy(translation).float()
         }
         
