@@ -19,7 +19,7 @@ numpy
 
 # Open3D: A modern library for 3D data processing, including point clouds, meshes, and transformations.
 # Crucial for handling 3D models and visualizing poses.
-open3d
+#open3d
 
 # -------------------------------------------------
 # API Deployment Libraries
@@ -45,5 +45,9 @@ Pillow
 python-dotenv
 
 scipy
+
+matplotlib
+
+scikit-learn
 
 -e .
