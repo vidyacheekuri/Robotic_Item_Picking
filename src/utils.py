@@ -36,3 +36,19 @@ class_id_to_name = {
     17: "037_scissors", 18: "040_large_marker", 19: "051_large_clamp", 
     20: "052_extra_large_clamp", 21: "061_foam_brick"
 }
+def get_add_s_score(true_pose, pred_pose, object_model_points):
+    """
+    Calculates the ADD-S score for a predicted pose.
+    ADD-S is used for symmetric objects.
+    """
+    # Transform the model points by the poses
+    pred_points = (pred_pose[:3, :3] @ object_model_points.T + pred_pose[:3, 3, np.newaxis]).T
+    true_points = (true_pose[:3, :3] @ object_model_points.T + true_pose[:3, 3, np.newaxis]).T
+
+    # Calculate the pairwise distances between each transformed point
+    from scipy.spatial.distance import cdist
+    distances = cdist(pred_points, true_points)
+
+    # Find the closest distance for each predicted point and average them
+    min_distances = distances.min(axis=1)
+    return min_distances.mean()

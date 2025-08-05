@@ -50,4 +50,6 @@ matplotlib
 
 scikit-learn
 
+tqdm
+
 -e .

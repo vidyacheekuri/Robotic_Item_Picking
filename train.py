@@ -20,7 +20,7 @@ def train_model():
     # 2. Load and subset the data
     ingestion = DataIngestion()
     all_data_paths = ingestion.get_data_paths()
-    data_paths = all_data_paths[:5000] # Using a small subset for a quick run
+    data_paths = all_data_paths
     print(f"Using {len(data_paths)} samples for training.")
 
     # 3. Split data and create training DataLoader
@@ -38,9 +38,9 @@ def train_model():
     loss_function = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=0.0001)
 
-    # 5. Run Training for 1 Epoch
+    # 5. Run Training for 20 Epochs
     model.train()
-    num_epochs = 1 
+    num_epochs = 20
     print(f"Training for {num_epochs} epoch...")
 
     for epoch in range(num_epochs):
