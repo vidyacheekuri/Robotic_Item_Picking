@@ -20,7 +20,7 @@ setup(
 name='Robotic_Item_Picking',
 version='0.0.1',
 author='Vidya',
-author_email='vidyacheekuri@example.com',
+author_email='vidyacheekuri@gmail.com',
 packages=find_packages(),
 install_requires=get_requirements('requirements.txt')
 
