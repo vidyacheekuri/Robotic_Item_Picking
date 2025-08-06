@@ -12,9 +12,9 @@ Final Validation Loss (Translation MSE): [Enter Your Final Translation Loss Here
 
 Final Validation Loss (Rotation MSE): [Enter Your Final Rotation Loss Here]
 
-Below is a qualitative result from the evaluation script, showing the model's prediction (Red Box) overlaid against the ground truth (Green Box).
+Below is a qualitative result from the evaluation script, showing the model's prediction (Red Lining) overlaid against the ground truth (Green Lining).
 
-![Final Evaluation Result](evaluation_result.png)
+![Final Evaluation Result](Result.png)
 
 **Tech Stack**
 Model Development: PyTorch, Torchvision
@@ -26,10 +26,15 @@ Environment & MLOps: Conda, Git, Git LFS
 Utilities: TQDM, Matplotlib
 
 **Project Structure**
+
 ├── datasets/           # (Populated by scripts) Holds the YCB-Video dataset.
+
 ├── src/
+
 │   ├── components/
+
 │   │   ├── data_ingestion.py
+
 │   │   ├── dataset.py
 │   │   └── model_trainer.py
 │   ├── utils.py
