@@ -104,29 +104,40 @@ Large File Management: The trained model exceeded GitHub's 100 MB file limit, ne
 This project was a deep dive into the practical realities of building and deploying a complex machine learning system, emphasizing perseverance and pragmatic problem-solving.
 
 ```mermaid
-graph TD
+graph LR
     subgraph "1. Data Preparation"
         A["🖼️ YCB-Video Dataset"] --> B{"Data Ingestion & Preprocessing"};
         B --> C["PyTorch DataLoader"];
     end
 
     subgraph "2. Model Training Loop"
-        C --> D["PoseNet Model (ResNet50 Backbone)"];
-        C -- "Ground Truth Poses" --> F["Loss Calculation (MSE)"];
-        D -- "Predictions" --> F;
-        F --> G["Adam Optimizer"];
-        G --> D;
+        D["PoseNet Model (ResNet50 Backbone)"];
+        F["Loss Calculation (MSE)"];
+        G["Adam Optimizer"];
+    end
+    
+    subgraph "3. Evaluation"
+        H["✅ Trained posenet_model.pth"];
+        I{"Inference"};
+        J["Validation Image"];
+        K["Predicted 6D Pose"];
+        M{"Visualization"};
+        N["Final Result Image"];
     end
 
-    subgraph "3. Evaluation"
-        G --> H["✅ Trained posenet_model.pth"];
-        H --> I{"Inference"};
-        J["Validation Image"] --> I;
-        I --> K["Predicted 6D Pose"];
-        L["Ground Truth Pose"] -.-> M{"Visualization"};
-        K -.-> M;
-        M["Red Box (Predicted) vs. Green Box (Truth)"] --> N["Final Result Image"];
-    end
+    %% --- Define the connections to enforce order ---
+    C --> D;
+    D -- "Predictions" --> F;
+    C -- "Ground Truth Poses" --> F;
+    F --> G;
+    G --> D;
+    G --> H;
+    H --> I;
+    J --> I;
+    I --> K;
+    K -.-> M;
+    M --> N;
+
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style D fill:#bbf,stroke:#333,stroke-width:2px
