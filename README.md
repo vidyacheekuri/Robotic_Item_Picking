@@ -105,26 +105,22 @@ This project was a deep dive into the practical realities of building and deploy
 
 ```mermaid
 graph TD
-    A["🖼️ YCB-Video Dataset"] --> B{"Data Ingestion & Preprocessing"};
-    B --> C["PyTorch DataLoader"];
-    C --> D["PoseNet Model"];
-    subgraph PoseNet Model
-        D1["ResNet50 Backbone"];
-        D2["Custom Regression Head"];
-        D1 --> D2;
+    subgraph "1. Data Preparation"
+        A["🖼️ YCB-Video Dataset"] --> B{"Data Ingestion & Preprocessing"};
+        B --> C["PyTorch DataLoader"];
     end
-    D --> E{"Model Outputs"};
-    subgraph Model Outputs
-        E1["3D Translation (x, y, z)"];
-        E2["6D Rotation Vector"];
-    end
-    C -- "Ground Truth Poses" --> F["Loss Calculation"];
-    E -- "Predictions" --> F;
-    F --> G["Adam Optimizer"];
-    G --> D;
 
-    subgraph Evaluation
-        H["Trained posenet_model.pth"] --> I{"Inference"};
+    subgraph "2. Model Training Loop"
+        C --> D["PoseNet Model (ResNet50 Backbone)"];
+        C -- "Ground Truth Poses" --> F["Loss Calculation (MSE)"];
+        D -- "Predictions" --> F;
+        F --> G["Adam Optimizer"];
+        G --> D;
+    end
+
+    subgraph "3. Evaluation"
+        G --> H["✅ Trained posenet_model.pth"];
+        H --> I{"Inference"};
         J["Validation Image"] --> I;
         I --> K["Predicted 6D Pose"];
         L["Ground Truth Pose"] -.-> M{"Visualization"};
@@ -136,4 +132,5 @@ graph TD
     style D fill:#bbf,stroke:#333,stroke-width:2px
     style H fill:#c9c,stroke:#333,stroke-width:2px
     style N fill:#9c9,stroke:#333,stroke-width:2px
+
 ```
