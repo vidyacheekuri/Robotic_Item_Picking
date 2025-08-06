@@ -3,6 +3,15 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Project-specific
+validation_data/
+validation_data.zip
+logs/
+evaluation_result.png
 # C extensions
 *.so
 
