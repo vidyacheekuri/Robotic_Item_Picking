@@ -102,3 +102,40 @@ Data Unavailability: The project was frequently blocked by broken and unreliable
 Large File Management: The trained model exceeded GitHub's 100 MB file limit, necessitating the implementation of Git LFS for proper version control of large model artifacts. This provided hands-on experience with standard industry practices for managing large-scale ML projects.
 
 This project was a deep dive into the practical realities of building and deploying a complex machine learning system, emphasizing perseverance and pragmatic problem-solving.
+
+```
+graph TD
+    A[🖼️ YCB-Video Dataset] --> B{Data Ingestion & Preprocessing};
+    B --> C[PyTorch DataLoader];
+    C --> D{PoseNet Model};
+    subgraph PoseNet Model
+        D1[ResNet50 Backbone];
+        D2[Custom Regression Head];
+        D1 --> D2;
+    end
+    D --> E{Model Outputs};
+    subgraph Model Outputs
+        E1[3D Translation (x, y, z)];
+        E2[6D Rotation Vector];
+    end
+    C -- Ground Truth Poses --> F[Loss Calculation];
+    E -- Predictions --> F;
+    F --> G[Adam Optimizer];
+    G --> D;
+
+    subgraph Evaluation
+        H[Trained posenet_model.pth] --> I{Inference};
+        J[Validation Image] --> I;
+        I --> K[Predicted 6D Pose];
+        L[Ground Truth Pose] -.-> M{Visualization};
+        K -.-> M;
+        M[Red Box (Predicted) vs. Green Box (Truth)] --> N[Final Result Image];
+    end
+
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style H fill:#c9c,stroke:#333,stroke-width:2px
+    style N fill:#9c9,stroke:#333,stroke-width:2px
+
+```
