@@ -1,11 +1,13 @@
 ## End-to-End 6D Object Pose Estimation for Robotic Grasping
 
-**Project Summary**
+## Project Summary:
+
 This project implements and validates a complete, end-to-end deep learning pipeline to predict the 6D pose (3D rotation and 3D translation) of known objects from a single RGB image. The system leverages a transfer learning approach with a ResNet50 backbone to perform this complex regression task.
 
 The primary goal was to build a robust, script-based application that mimics a real-world computer vision task for robotic automation, such as identifying an object's precise orientation and position for a robotic arm to grasp it from a cluttered bin. This project showcases a full range of ML engineering skills, from managing complex data and environments to training, evaluating, and packaging a deep learning model.
 
-**Key Results**
+## Key Results:
+
 After being trained for 20 epochs on the YCB-Video dataset, the model successfully learned to predict object poses. The final validation loss (Mean Squared Error) demonstrates the model's predictive accuracy.
 
 Final Validation Loss (Translation MSE): [Enter Your Final Translation Loss Here]
@@ -16,25 +18,23 @@ Below is a qualitative result from the evaluation script, showing the model's pr
 
 ![Final Evaluation Result](Result.png)
 
-**Tech Stack**
-Model Development: PyTorch, Torchvision
+## Tech Stack:
 
-Data Science & ML: Scikit-learn, NumPy, OpenCV, Open3D
+**Model Development**: PyTorch, Torchvision
 
-Environment & MLOps: Conda, Git, Git LFS
+**Data Science & ML**: Scikit-learn, NumPy, OpenCV, Open3D
 
-Utilities: TQDM, Matplotlib
+**Environment & MLOps**: Conda, Git, Git LFS
 
-**Project Structure**
+**Utilities**: TQDM, Matplotlib
 
+## Project Structure
+
+```
 ├── datasets/           # (Populated by scripts) Holds the YCB-Video dataset.
-
 ├── src/
-
 │   ├── components/
-
 │   │   ├── data_ingestion.py
-
 │   │   ├── dataset.py
 │   │   └── model_trainer.py
 │   ├── utils.py
@@ -45,8 +45,10 @@ Utilities: TQDM, Matplotlib
 ├── requirements.txt    # Project dependencies.
 ├── setup.py            # Makes the project an installable package.
 └── README.md
+```
 
-**Setup and Usage**
+## Setup and Usage:
+
 1. Clone the repository:
 
 git clone https://github.com/vidyacheekuri/Robotic_Item_Picking.git
@@ -73,7 +75,8 @@ To run the evaluation, you must have a posenet_model.pth file and a validation_d
 
 python evaluate.py
 
-**Key Challenges & Learnings**
+## Key Challenges & Learnings:
+
 Environment Instability: A significant challenge was overcoming deep library conflicts (Open3D, PyTorch) and persistent memory crashes (segmentation faults) on a local macOS environment. This was solved by systematically debugging the library stack and transitioning to a robust, script-based workflow in a clean, reproducible Conda environment. This experience was a practical lesson in the importance of stable MLOps practices.
 
 Data Unavailability: The project was frequently blocked by broken and unreliable public links to the large YCB-Video dataset. This real-world issue was navigated by systematically finding and testing alternative data sources and workflows, including the Kaggle API and direct programmatic downloads from university archives. This highlighted the necessity of data pipeline resilience.
