@@ -105,34 +105,32 @@ This project was a deep dive into the practical realities of building and deploy
 
 ```mermaid
 graph TD
-
-    A[🖼️ YCB-Video Dataset] --> B{Data Ingestion & Preprocessing};
-    B --> C[PyTorch DataLoader];
-    C --> D{PoseNet Model};
+    A["🖼️ YCB-Video Dataset"] --> B{"Data Ingestion & Preprocessing"};
+    B --> C["PyTorch DataLoader"];
+    C --> D["PoseNet Model"];
     subgraph PoseNet Model
-        D1[ResNet50 Backbone];
-        D2[Custom Regression Head];
+        D1["ResNet50 Backbone"];
+        D2["Custom Regression Head"];
         D1 --> D2;
     end
-    D --> E{Model Outputs};
+    D --> E{"Model Outputs"};
     subgraph Model Outputs
-        E1[3D Translation (x, y, z)];
-        E2[6D Rotation Vector];
+        E1["3D Translation (x, y, z)"];
+        E2["6D Rotation Vector"];
     end
-    C -- Ground Truth Poses --> F[Loss Calculation];
-    E -- Predictions --> F;
-    F --> G[Adam Optimizer];
+    C -- "Ground Truth Poses" --> F["Loss Calculation"];
+    E -- "Predictions" --> F;
+    F --> G["Adam Optimizer"];
     G --> D;
 
     subgraph Evaluation
-        H[Trained posenet_model.pth] --> I{Inference};
-        J[Validation Image] --> I;
-        I --> K[Predicted 6D Pose];
-        L[Ground Truth Pose] -.-> M{Visualization};
+        H["Trained posenet_model.pth"] --> I{"Inference"};
+        J["Validation Image"] --> I;
+        I --> K["Predicted 6D Pose"];
+        L["Ground Truth Pose"] -.-> M{"Visualization"};
         K -.-> M;
-        M[Red Box (Predicted) vs. Green Box (Truth)] --> N[Final Result Image];
+        M["Red Box (Predicted) vs. Green Box (Truth)"] --> N["Final Result Image"];
     end
-
 
     style A fill:#f9f,stroke:#333,stroke-width:2px
     style D fill:#bbf,stroke:#333,stroke-width:2px
