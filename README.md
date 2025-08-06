@@ -103,8 +103,9 @@ Large File Management: The trained model exceeded GitHub's 100 MB file limit, ne
 
 This project was a deep dive into the practical realities of building and deploying a complex machine learning system, emphasizing perseverance and pragmatic problem-solving.
 
-```
+```mermaid
 graph TD
+
     A[🖼️ YCB-Video Dataset] --> B{Data Ingestion & Preprocessing};
     B --> C[PyTorch DataLoader];
     C --> D{PoseNet Model};
@@ -137,5 +138,4 @@ graph TD
     style D fill:#bbf,stroke:#333,stroke-width:2px
     style H fill:#c9c,stroke:#333,stroke-width:2px
     style N fill:#9c9,stroke:#333,stroke-width:2px
-
 ```
