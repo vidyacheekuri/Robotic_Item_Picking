@@ -24,8 +24,8 @@ The core of this project is a custom PoseNet model built using PyTorch. The arch
 
 After being trained for 20 epochs on the YCB-Video dataset, the model successfully learned to predict object poses. The final validation loss (Mean Squared Error) demonstrates the model's predictive accuracy.
 ```
-* **Final Validation Loss (Translation MSE):** 0.000063
-* **Final Validation Loss (Rotation MSE):** 0.000164
+Final Validation Loss (Translation MSE): 0.000063
+Final Validation Loss (Rotation MSE): 0.000164
 ```
 Below is a qualitative result from the evaluation script, showing the model's prediction (Red Lining) overlaid against the ground truth (Green Lining).
 
