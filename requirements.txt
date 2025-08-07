@@ -54,4 +54,3 @@ tqdm
 
 boto3
 
--e .
