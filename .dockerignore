@@ -1,0 +1,19 @@
+# Git files
+.git/
+.gitignore
+
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Local data and results (we don't want to upload these)
+datasets/
+validation_data/
+validation_data.zip
+test_results/
+logs/
+evaluation_result.png

@@ -52,4 +52,6 @@ scikit-learn
 
 tqdm
 
+boto3
+
 -e .

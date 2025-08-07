@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: 6D Pose Estimation for Robotic Grasping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0f172a; /* Starry Night Blue */
+        }
+        .loader {
+            border: 4px solid #4a5568; /* dark gray */
+            border-top: 4px solid #3b82f6; /* blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-200">
+
+    <!-- Header -->
+    <header class="bg-slate-800/50 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">Robotic Item Picking</div>
+            <div class="space-x-6 flex items-center">
+                <a href="#demo" class="text-gray-300 hover:text-white transition-colors">Live Demo</a>
+                <a href="#about" class="text-gray-300 hover:text-white transition-colors">About</a>
+                <a href="#tech" class="text-gray-300 hover:text-white transition-colors">Tech Stack</a>
+                <a href="https://github.com/vidyacheekuri/Robotic_Item_Picking" target="_blank" class="text-gray-300 hover:text-white transition-colors">
+                    <i data-lucide="github"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-12">
+
+        <!-- Live Demo Section -->
+        <section id="demo" class="text-center py-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-white">6D Object Pose Estimation</h1>
+            <p class="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">An end-to-end deep learning pipeline that identifies and locates objects in 3D space from a single image, enabling robotic grasping and automation.</p>
+
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-8 max-w-3xl w-full mx-auto">
+                <div class="border-2 border-dashed border-slate-600 rounded-lg p-8 mb-6 cursor-pointer hover:border-blue-500 transition-colors" id="drop-zone">
+                    <input type="file" id="file-input" class="hidden" accept="image/*">
+                    <div id="upload-prompt">
+                        <svg class="mx-auto h-12 w-12 text-gray-500" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                        <p class="mt-2 text-sm text-gray-400"><span class="font-medium text-blue-400">Click to upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500">PNG or JPG</p>
+                    </div>
+                    <div id="preview-container" class="hidden"><img id="image-preview" class="max-h-48 mx-auto rounded-md"/><p id="filename" class="text-sm mt-2 text-gray-300"></p></div>
+                </div>
+                <button id="predict-button" class="bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg w-full hover:bg-blue-700 transition-colors disabled:bg-slate-600" disabled>Predict Pose</button>
+            </div>
+
+            <div id="result-container" class="mt-12 hidden">
+                <h2 class="text-3xl font-bold mb-6 text-white">Prediction Result</h2>
+                <div id="loader-container" class="flex justify-center items-center h-64"><div class="loader"></div></div>
+                <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-4 max-w-3xl w-full mx-auto">
+                    <img id="result-image" class="w-full rounded-lg hidden" />
+                </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-700">
+
+        <!-- About Section -->
+        <section id="about" class="py-16">
+            <div class="max-w-5xl mx-auto text-left">
+                <h2 class="text-3xl font-bold text-center mb-12 text-white">About The Project</h2>
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-4 text-blue-400">The Challenge</h3>
+                        <p class="text-gray-400 mb-6">For a robot to interact intelligently with the world, it needs to understand not just <b>what</b> an object is, but precisely <b>where</b> it is and how it's oriented. This project tackles this core robotics challenge by building a system to predict an object's <b>6D Pose</b> (3D position + 3D rotation) from a standard 2D image.</p>
+
+                        <h3 class="text-2xl font-semibold mb-4 text-blue-400">The Dataset</h3>
+                        <p class="text-gray-400 mb-6">The model was trained for **20 epochs** on over 50,000 images from the YCB-Video dataset, a standard benchmark in robotics research. This dataset features 21 common household objects (e.g., cracker box, mustard bottle, banana, clamps) in various cluttered scenes, providing a realistic and challenging training environment.</p>
+
+                        <h3 class="text-2xl font-semibold mb-4 text-blue-400">The Model</h3>
+                        <p class="text-gray-400">The solution is a custom `PoseNet` model built in PyTorch. It uses a pre-trained ResNet50 backbone for powerful feature extraction, with a custom regression head to predict the final pose. The model's high precision is demonstrated by its very low final validation error.</p>
+                         <div class="mt-6 text-center bg-slate-800 border border-slate-700 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500">Final Validation Loss (MSE)</p>
+                            <p class="text-lg font-semibold text-blue-400">Translation: 0.000063 | Rotation: 0.000164</p>
+                        </div>
+                    </div>
+            </div>
+        </section>
+
+        <hr class="my-16 border-slate-700">
+
+        <!-- Tech Stack Section -->
+        <section id="tech" class="py-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-12 text-white">Technology & MLOps Workflow</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg shadow-md text-center">
+                        <i data-lucide="box" class="mx-auto h-10 w-10 text-blue-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">PyTorch</h3>
+                        <p class="text-sm text-gray-400">Model Building & Training</p>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg shadow-md text-center">
+                        <i data-lucide="server" class="mx-auto h-10 w-10 text-blue-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">FastAPI</h3>
+                        <p class="text-sm text-gray-400">API Deployment</p>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg shadow-md text-center">
+                        <i data-lucide="git-branch" class="mx-auto h-10 w-10 text-blue-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">Git & Git LFS</h3>
+                        <p class="text-sm text-gray-400">Version Control</p>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg shadow-md text-center">
+                        <i data-lucide="flask-conical" class="mx-auto h-10 w-10 text-blue-400 mb-3"></i>
+                        <h3 class="font-semibold text-white">Conda</h3>
+                        <p class="text-sm text-gray-400">Environment Management</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-800/50 mt-16 border-t border-slate-700">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-400">
+            <p>&copy; 2025 Sree Vidya Cheekuri. All rights reserved.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://github.com/vidyacheekuri/Robotic_Item_Picking" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+                <a href="https://www.linkedin.com/in/sreevidyacheekuri" target="_blank" class="hover:text-white transition-colors">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        lucide.createIcons();
+        
+        // --- All the JavaScript for the uploader (same as before) ---
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const predictButton = document.getElementById('predict-button');
+        const resultContainer = document.getElementById('result-container');
+        const resultImage = document.getElementById('result-image');
+        const loader = document.getElementById('loader-container');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const filenameDisplay = document.getElementById('filename');
+
+        let selectedFile = null;
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-blue-500', 'bg-blue-50'); });
+        dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('border-blue-500', 'bg-blue-50'); });
+        dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.classList.remove('border-blue-500', 'bg-blue-50'); handleFile(e.dataTransfer.files[0]); });
+
+        function handleFile(file) {
+            if (file && file.type.startsWith('image/')) {
+                selectedFile = file;
+                predictButton.disabled = false;
+                const reader = new FileReader();
+                reader.onload = (e) => { imagePreview.src = e.target.result; }
+                reader.readAsDataURL(file);
+                uploadPrompt.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                filenameDisplay.textContent = file.name;
+            } else {
+                selectedFile = null;
+                predictButton.disabled = true;
+            }
+        }
+
+        predictButton.addEventListener('click', async () => {
+            if (!selectedFile) return;
+            resultContainer.classList.remove('hidden');
+            resultImage.classList.add('hidden');
+            loader.classList.remove('hidden');
+            document.querySelector('#result-container').scrollIntoView({ behavior: 'smooth' });
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            try {
+                const response = await fetch('/predict/', { method: 'POST', body: formData });
+                if (response.ok) {
+                    const imageBlob = await response.blob();
+                    const imageUrl = URL.createObjectURL(imageBlob);
+                    resultImage.src = imageUrl;
+                    loader.classList.add('hidden');
+                    resultImage.classList.remove('hidden');
+                } else {
+                    alert('Prediction failed. Please try again.');
+                    loader.classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please check the console.');
+                loader.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
