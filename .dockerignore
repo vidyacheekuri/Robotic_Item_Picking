@@ -1,19 +1,30 @@
-# Git files
+# Large datasets and output
+datasets/
+validation_data/
+test_results/
+logs/
+*.zip
+*.tar.gz
+*.h5
+*.pkl
+*.pt
+*.onnx
+*.npy
+*.npz
+*.csv
+
+# Git internals
 .git/
 .gitignore
 
-# Python virtual environment
+# Python artifacts
 venv/
-
-# Python cache
+.venv/
 __pycache__/
 *.pyc
 *.egg-info/
 
-# Local data and results (we don't want to upload these)
-datasets/
-validation_data/
-validation_data.zip
-test_results/
-logs/
-evaluation_result.png
+# Misc
+*.log
+*.tmp
+*.DS_Store
