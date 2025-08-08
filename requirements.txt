@@ -2,9 +2,14 @@
 # Core Deep Learning & Computer Vision Libraries
 # -------------------------------------------------
 
-# PyTorch: The main deep learning framework for building and training your model.
-torch
-torchvision
+# put this line ABOVE torch/torchvision
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.4.1+cpu
+torchvision==0.19.1+cpu
+
+# (optional) pin lighter OpenCV
+opencv-python-headless==4.10.0.84
 
 # OpenCV: EsPsential for real-time computer vision tasks, loading images, and basic image manipulations.
 # We use the headless version for servers as it doesn't include GUI packages.

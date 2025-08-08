@@ -1,5 +1,6 @@
 # 1. Start from a standard Python base image
-FROM python:3.8
+#FROM python:3.8
+FROM --platform=linux/amd64 python:3.8-slim
 
 # 2. Set the working directory inside the container
 WORKDIR /app

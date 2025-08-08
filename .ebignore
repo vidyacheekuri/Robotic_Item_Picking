@@ -1,0 +1,35 @@
+# Big/local stuff – exclude from EB source bundle
+datasets/
+validation_data/
+test_results/
+logs/
+checkpoints/
+runs/
+output/
+*.zip
+*.tar
+*.tar.gz
+*.h5
+*.pkl
+*.pt
+*.onnx
+*.npy
+*.npz
+*.csv
+
+# Git internals
+.git/
+.gitignore
+
+# Python junk
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+
+# Misc
+*.log
+*.tmp
+*.DS_Store
+notebook/
