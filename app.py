@@ -14,13 +14,13 @@ app = FastAPI(title="6D Pose Estimation API")
 
 # This line tells FastAPI to serve all files from the 'frontend' directory
 # when a request comes in for the root path "/".
-app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
+#app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 # --- Create an endpoint to serve the index.html file ---
-'''@app.get("/")
+@app.get("/")
 async def read_index():
     """Serves the main HTML page of the web app."""
-    return FileResponse('frontend/index.html')'''
+    return FileResponse('frontend/index.html')
 
 
 @app.post("/predict/", response_class=StreamingResponse)
