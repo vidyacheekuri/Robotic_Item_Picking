@@ -1,61 +1,39 @@
 # -------------------------------------------------
-# Core Deep Learning & Computer Vision Libraries
+# PyTorch & TorchVision (Platform-specific)
 # -------------------------------------------------
-
-# put this line ABOVE torch/torchvision
 --extra-index-url https://download.pytorch.org/whl/cpu
 
-torch==2.4.1+cpu
-torchvision==0.19.1+cpu
+# Linux (Docker/EB) - CPU only wheels
+torch==2.4.1+cpu ; platform_system == "Linux"
+torchvision==0.19.1+cpu ; platform_system == "Linux"
 
-# (optional) pin lighter OpenCV
+# macOS (Darwin) - regular wheels
+torch==2.4.1 ; platform_system == "Darwin"
+torchvision==0.19.1 ; platform_system == "Darwin"
+
+# -------------------------------------------------
+# Core Computer Vision
+# -------------------------------------------------
 opencv-python-headless==4.10.0.84
 
-# OpenCV: EsPsential for real-time computer vision tasks, loading images, and basic image manipulations.
-# We use the headless version for servers as it doesn't include GUI packages.
-opencv-python-headless
+# 3D processing
+open3d==0.18.0
 
 # -------------------------------------------------
-# 3D Data Handling & Numerical Operations
+# API Deployment
 # -------------------------------------------------
-
-# NumPy: A fundamental package for scientific computing and matrix operations.
-numpy
-
-# Open3D: A modern library for 3D data processing, including point clouds, meshes, and transformations.
-# Crucial for handling 3D models and visualizing poses.
-#open3d
-
-# -------------------------------------------------
-# API Deployment Libraries
-# -------------------------------------------------
-
-# FastAPI: A modern, high-performance web framework for building your prediction API.
-fastapi
-
-# Uvicorn: The ASGI server that will run your FastAPI application.
-uvicorn
-
-# Required by FastAPI to handle file uploads (e.g., when you send an image to your API endpoint).
+fastapi==0.112.2
+uvicorn==0.30.6
 python-multipart
 
 # -------------------------------------------------
-# Utilities
+# Utilities & Helpers
 # -------------------------------------------------
-
-# Pillow: Python Imaging Library, often a dependency for torchvision and other image tasks.
-Pillow
-
-# For managing environment variables (e.g., paths to your saved model weights).
-python-dotenv
-
+numpy
 scipy
-
 matplotlib
-
 scikit-learn
-
 tqdm
-
+Pillow
+python-dotenv
 boto3
-
