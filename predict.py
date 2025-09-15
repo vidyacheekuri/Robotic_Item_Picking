@@ -4,7 +4,6 @@ import numpy as np
 import torch.nn as nn
 import os
 from scipy.io import loadmat
-import boto3
 
 from src.components.model_trainer import PoseNet
 from src.utils import draw_3d_bounding_box, class_id_to_name
@@ -13,24 +12,11 @@ from torchvision import transforms
 # --- 1. SETUP ---
 DEVICE = torch.device("cpu") # Use CPU for deployment
 MODEL_PATH = 'posenet_model.pth'
-S3_BUCKET_NAME = 'sree-vidya-posenet-model'  
-S3_MODEL_KEY = 'posenet_model.pth'
 
-# --- 2. DOWNLOAD & LOAD THE MODEL ---
-# This block will run when the application starts.
-# It checks if the model file exists, and if not, downloads it from S3.
-if not os.path.exists(MODEL_PATH):
-    print(f"--- Model not found locally. Downloading from S3 bucket: {S3_BUCKET_NAME} ---")
-    try:
-        s3 = boto3.client('s3')
-        s3.download_file(S3_BUCKET_NAME, S3_MODEL_KEY, MODEL_PATH)
-        print("--- Model downloaded successfully. ---")
-    except Exception as e:
-        print(f"!!! ERROR: Failed to download model from S3. {e} !!!")
-
+# --- 2. LOAD THE MODEL ---
 # Instantiate the model architecture
 model = PoseNet(pretrained=False)
-# Load the saved weights from the (now downloaded) file
+# Load the saved weights from the local file
 model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE, weights_only=True))
 # Move the model to the selected device
 model.to(DEVICE)
